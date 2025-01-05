@@ -2,6 +2,7 @@
 
 use Kirby\Cms\App;
 use Kirby\Exception\InvalidArgumentException;
+use Kirby\Exception\LogicException;
 use Kirby\Http\Remote;
 use Kirby\Toolkit\A;
 
@@ -19,11 +20,14 @@ return [
 
                 $requestOptions = $kirby->option('johannschopplich.deploy-trigger.requestOptions', []);
 
-                // Forward exceptions to the Kirby Panel, don't throw them here
                 $response = Remote::request(
                     $deployUrl,
                     A::merge(['method' => 'POST'], $requestOptions)
                 );
+
+                if ($response->code() < 200 || $response->code() >= 300) {
+                    throw new LogicException('Deployment request failed: ' . $response->content());
+                }
 
                 return [
                     'ok' => true,
