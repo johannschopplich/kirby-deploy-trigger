@@ -1,0 +1,9 @@
+title: Playground
+
+buttons:
+  - preview
+  - deploy-trigger
+
+sections:
+  pages:
+    type: pages

@@ -1,0 +1,11 @@
+title: Page
+
+buttons:
+  - preview
+  - settings
+  - deploy-trigger
+  - status
+
+fields:
+  blocks:
+    type: blocks
