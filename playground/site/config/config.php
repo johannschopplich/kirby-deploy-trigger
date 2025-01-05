@@ -8,6 +8,6 @@ return [
     ],
 
     'johannschopplich.deploy-trigger' => [
-        'deployUrl' => ''
+        'deployUrl' => env('DEPLOY_TRIGGER_URL')
     ]
 ];

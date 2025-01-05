@@ -30,7 +30,8 @@ return [
                 }
 
                 return [
-                    'ok' => true,
+                    'status' => 'ok',
+                    'code' => 200,
                     'data' => $response->content()
                 ];
             }
