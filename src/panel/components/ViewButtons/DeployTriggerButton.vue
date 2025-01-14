@@ -5,6 +5,7 @@ const panel = usePanel();
 const isDeploying = ref(false);
 
 async function triggerDeploy() {
+  if (isDeploying.value) return;
   isDeploying.value = true;
 
   try {
