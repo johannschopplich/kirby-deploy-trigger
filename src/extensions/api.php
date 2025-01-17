@@ -15,7 +15,7 @@ return [
                 $deployUrl = $kirby->option('johannschopplich.deploy-trigger.deployUrl');
 
                 if (!$deployUrl) {
-                    throw new InvalidArgumentException('Deploy URL not set');
+                    throw new InvalidArgumentException('Missing "johannschopplich.deploy-trigger.deployUrl" plugin option');
                 }
 
                 $requestOptions = $kirby->option('johannschopplich.deploy-trigger.requestOptions', []);

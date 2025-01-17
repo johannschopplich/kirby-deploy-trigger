@@ -31,16 +31,14 @@ async function triggerDeploy() {
 </script>
 
 <template>
-  <div>
-    <k-button
-      :text="panel.t('johannschopplich.deploy-trigger.label')"
-      :icon="isDeploying ? 'loader' : 'deploy-trigger-rocket'"
-      responsive="text"
-      theme="blue-icon"
-      variant="filled"
-      size="sm"
-      @click="triggerDeploy()"
-    >
-    </k-button>
-  </div>
+  <k-button
+    :text="panel.t('johannschopplich.deploy-trigger.label')"
+    :icon="isDeploying ? 'loader' : 'deploy-trigger-rocket'"
+    responsive="text"
+    theme="blue-icon"
+    variant="filled"
+    size="sm"
+    @click="triggerDeploy()"
+  >
+  </k-button>
 </template>
