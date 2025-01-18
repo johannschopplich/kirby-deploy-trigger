@@ -18,11 +18,11 @@
     }
   ],
   "require": {
-    "getkirby/composer-installer": "^1.2"
+    "getkirby/composer-installer": "^1"
   },
   "require-dev": {
     "getkirby/cms": "^4",
-    "vlucas/phpdotenv": "^5.6"
+    "vlucas/phpdotenv": "^5"
   },
   "scripts": {
     "dev": [
