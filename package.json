@@ -20,8 +20,6 @@
     "kirbyup": "^3.2.0",
     "kirbyuse": "^0.11.3",
     "prettier": "^3.4.2",
-    "prettier-plugin-tailwindcss": "^0.6.9",
-    "tailwindcss": "^3.4.17",
     "ufo": "^1.5.4",
     "zx": "^8.3.0"
   }
