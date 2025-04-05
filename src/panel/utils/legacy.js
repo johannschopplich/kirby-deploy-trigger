@@ -16,12 +16,11 @@ export function legacyViewButtonMixin(Vue) {
       );
       if (!buttonGroup) return;
 
-      const button = new Vue({
-        render: (h) => h(DeployTriggerButton),
-      }).$mount();
+      const ButtonConstructor = Vue.extend(DeployTriggerButton);
+      const button = new ButtonConstructor({ parent: this });
+      button.$mount();
 
       buttonGroup.$el.after(button.$el);
-      this.$forceUpdate();
     },
   });
 }
