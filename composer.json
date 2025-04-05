@@ -2,7 +2,7 @@
   "name": "johannschopplich/kirby-deploy-trigger",
   "description": "Kirby Panel plugin to trigger deployments on any platform",
   "type": "kirby-plugin",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "keywords": [
     "deployment",
     "vercel",
