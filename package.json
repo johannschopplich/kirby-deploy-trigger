@@ -16,7 +16,7 @@
     "@antfu/eslint-config": "^4.11.0",
     "bumpp": "^10.1.0",
     "eslint": "^9.24.0",
-    "kirbyup": "^3.2.1",
+    "kirbyup": "^3.3.0",
     "kirbyuse": "^0.11.3",
     "prettier": "^3.5.3",
     "ufo": "^1.5.4",
