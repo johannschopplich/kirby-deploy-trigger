@@ -6,6 +6,8 @@ export function legacyViewButtonMixin(Vue) {
     return;
   }
 
+  let buttonComponent;
+
   Vue.mixin({
     mounted() {
       if (this.$options.name !== "k-header") return;
@@ -17,10 +19,19 @@ export function legacyViewButtonMixin(Vue) {
       if (!buttonGroup) return;
 
       const ButtonConstructor = Vue.extend(DeployTriggerButton);
-      const button = new ButtonConstructor({ parent: this });
-      button.$mount();
+      buttonComponent = new ButtonConstructor({ parent: this });
+      buttonComponent.$mount();
 
-      buttonGroup.$el.after(button.$el);
+      buttonGroup.$el.after(buttonComponent.$el);
+    },
+    beforeDestroy() {
+      if (this.$options.name !== "k-header") return;
+      if (window.panel.view.component !== "k-site-view") return;
+
+      if (buttonComponent) {
+        buttonComponent.$destroy();
+        buttonComponent = undefined;
+      }
     },
   });
 }
