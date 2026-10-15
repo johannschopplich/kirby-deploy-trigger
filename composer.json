@@ -4,9 +4,10 @@
   "type": "kirby-plugin",
   "version": "1.0.6",
   "keywords": [
-    "deployment",
-    "vercel",
-    "kirby"
+    "kirby",
+    "kirby-cms",
+    "kirby-plugin",
+    "deployment"
   ],
   "license": "MIT",
   "homepage": "https://github.com/johannschopplich/kirby-deploy-trigger#readme",
