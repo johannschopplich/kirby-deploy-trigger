@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref, usePanel } from "kirbyuse";
 
 const panel = usePanel();
@@ -23,7 +23,7 @@ async function triggerDeploy() {
     );
   } catch (error) {
     console.error(error);
-    panel.notification.error(error.message);
+    panel.notification.error((error as Error).message);
   } finally {
     isDeploying.value = false;
   }

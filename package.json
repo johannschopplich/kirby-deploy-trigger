@@ -5,11 +5,12 @@
   "private": true,
   "packageManager": "pnpm@11.25.0",
   "scripts": {
-    "dev": "kirbyup serve src/panel/index.js",
-    "build": "kirbyup src/panel/index.js",
+    "dev": "kirbyup serve src/panel/index.ts",
+    "build": "kirbyup src/panel/index.ts",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier \"src/panel/**\" --write",
+    "test:types": "tsc --noEmit",
     "release": "pnpm run build && bumpp --all --execute \"npx zx scripts/pre-release.mjs\""
   },
   "devDependencies": {

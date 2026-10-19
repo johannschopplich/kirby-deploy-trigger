@@ -1,30 +1,34 @@
+/* eslint-disable ts/ban-ts-comment */
+import type { ComponentPublicInstance, PluginFunction } from "vue";
 import { isKirby5 } from "kirbyuse";
+// @ts-ignore - Vue component
 import DeployTriggerButton from "../components/ViewButtons/DeployTriggerButton.vue";
 
-export function legacyViewButtonMixin(Vue) {
+export const legacyViewButtonMixin: PluginFunction<any> = (Vue) => {
   if (isKirby5()) {
     return;
   }
 
-  let buttonComponent;
+  let buttonComponent: ComponentPublicInstance | undefined;
 
   Vue.mixin({
-    mounted() {
+    mounted(this: ComponentPublicInstance) {
       if (this.$options.name !== "k-header") return;
       if (window.panel.view.component !== "k-site-view") return;
 
       const buttonGroup = this.$children.find(
-        (child) => child.$options.name === "k-button-group",
+        (child: ComponentPublicInstance) =>
+          child.$options.name === "k-button-group",
       );
       if (!buttonGroup) return;
 
       const ButtonConstructor = Vue.extend(DeployTriggerButton);
-      buttonComponent = new ButtonConstructor({ parent: this });
+      buttonComponent = new ButtonConstructor({ parent: this as any });
       buttonComponent.$mount();
 
       buttonGroup.$el.after(buttonComponent.$el);
     },
-    beforeDestroy() {
+    beforeDestroy(this: ComponentPublicInstance) {
       if (this.$options.name !== "k-header") return;
       if (window.panel.view.component !== "k-site-view") return;
 
@@ -34,4 +38,4 @@ export function legacyViewButtonMixin(Vue) {
       }
     },
   });
-}
+};
