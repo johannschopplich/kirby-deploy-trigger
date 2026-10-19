@@ -3,6 +3,7 @@
 use Kirby\Cms\App;
 use Kirby\Exception\InvalidArgumentException;
 use Kirby\Exception\LogicException;
+use Kirby\Exception\PermissionException;
 use Kirby\Http\Remote;
 use Kirby\Toolkit\A;
 
@@ -12,6 +13,10 @@ return [
             'pattern' => '__deploy-trigger__/hook',
             'method' => 'POST',
             'action' => function () use ($kirby) {
+                if ($kirby->user()?->role()->permissions()->for('johannschopplich.deploy-trigger', 'deploy') !== true) {
+                    throw new PermissionException();
+                }
+
                 $deployUrl = $kirby->option('johannschopplich.deploy-trigger.deployUrl');
 
                 if (!$deployUrl) {
