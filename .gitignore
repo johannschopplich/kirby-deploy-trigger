@@ -1,6 +1,9 @@
 # OS files
 .DS_Store
 
+# Log files
+*.log
+
 # Vendor files
 /node_modules
 /vendor
@@ -8,16 +11,18 @@
 # Playground files
 .env
 .license
+.kirby-tools-licenses
 /playground/public/media/*
 /playground/storage/accounts/*
+!/playground/storage/accounts/admin
+!/playground/storage/accounts/playground
 /playground/storage/cache/*
 /playground/storage/sessions/*
 
 # Cache and temporary files
-/.cache
 /.php-cs-fixer.cache
 /.phpunit.*
 /index.dev.mjs
-/tests/coverage
-/tests/*/tmp
+/phpunit.xml
+/tests/tmp
 /tools/**/vendor
