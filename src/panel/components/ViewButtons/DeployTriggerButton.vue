@@ -34,6 +34,7 @@ async function triggerDeploy() {
   <k-button
     :text="panel.t('johannschopplich.deploy-trigger.label')"
     :icon="isDeploying ? 'loader' : 'deploy-trigger-rocket'"
+    :disabled="isDeploying"
     responsive="text"
     theme="blue-icon"
     variant="filled"
