@@ -29,13 +29,12 @@ export const legacyViewButtonMixin: PluginFunction<any> = (Vue) => {
       buttonGroup.$el.after(buttonComponent.$el);
     },
     beforeDestroy(this: ComponentPublicInstance) {
-      if (this.$options.name !== "k-header") return;
-      if (window.panel.view.component !== "k-site-view") return;
+      // The view has already switched when the site view's header unmounts,
+      // so match the header the button was mounted into.
+      if (!buttonComponent || buttonComponent.$parent !== this) return;
 
-      if (buttonComponent) {
-        buttonComponent.$destroy();
-        buttonComponent = undefined;
-      }
+      buttonComponent.$destroy();
+      buttonComponent = undefined;
     },
   });
 };
