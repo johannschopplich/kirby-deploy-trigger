@@ -1,89 +1,181 @@
-![Kirby Deploy Trigger screenshot](./.github/kirby-deploy-trigger.png)
+<div align="center">
+  <img src="./.github/favicon.svg" alt="Kirby Deploy Trigger logo" width="120">
 
 # Kirby Deploy Trigger
 
-A Kirby Panel view button to trigger deployments on any CI/CD service, such as [Vercel](https://vercel.com/docs/deployments/deploy-hooks), [Netlify](https://docs.netlify.com/configure-builds/build-hooks/), or GitHub Actions.
+Kirby Deploy Trigger is a plugin for [Kirby CMS](https://getkirby.com) that adds a Panel button to start a deployment on Vercel, Netlify, GitHub Actions, or any service with a deploy hook.
 
-This is especially useful when you want to trigger a deployment after updating the content in the Panel from your headless Kirby setup. The button sends a request to the specified URL, which can be used to trigger a deployment on your CI/CD service.
+[Features](#features) •
+[Options](#options) •
+[Recipes](#recipes)
+
+</div>
+
+## When to Use
+
+| I want to…                                                      | Use                                       |
+| --------------------------------------------------------------- | ----------------------------------------- |
+| Rebuild a static or headless frontend after editing content     | `deploy-trigger` view button              |
+| Place the button in the site view or a page view                | `buttons` in the blueprint                |
+| Show the button in every site or page view                      | `panel.viewButtons` option                |
+| Keep a role from deploying                                      | `deploy` permission in the role blueprint |
+| Send a token, a JSON body, or another HTTP method with the hook | `requestOptions` option                   |
+
+## Features
+
+### 🚀 Deploy Button
+
+Add the `deploy-trigger` button to the `buttons` of the site blueprint or any page blueprint. The list replaces Kirby's default buttons, so keep the ones you want next to it – for the site view, they are `open`, `preview`, and `languages`:
+
+```yml
+# site/blueprints/site.yml
+buttons:
+  - open
+  - preview
+  - deploy-trigger
+  - languages
+```
+
+To show the button in every site view without touching a blueprint, set Kirby's [`panel.viewButtons`](https://getkirby.com/docs/reference/system/options/panel) option instead. A blueprint's `buttons` still take precedence:
+
+```php
+// site/config/config.php
+return [
+    'panel' => [
+        'viewButtons' => [
+            'site' => ['open', 'preview', 'deploy-trigger', 'languages']
+        ]
+    ]
+];
+```
+
+While the request runs, the button shows a spinner and ignores further clicks. A notification confirms once the deploy hook has accepted the request.
+
+### 🔐 Server-Side Request
+
+The button calls the plugin's own API route, and the server sends a `POST` request to the `deployUrl`. The hook URL and any token in `requestOptions` stay in your `config.php` and never reach the browser.
+
+A response outside the 2xx range shows up as a Panel error with its status code, followed by the response body when it is plain text or JSON. A hook that can't be reached – an unknown host, a timeout – shows the connection error.
+
+### 👥 Deploy Permission
+
+Every role may deploy by default. To withhold it, set the `deploy` permission to `false` in the role's blueprint:
+
+```yml
+# site/blueprints/users/editor.yml
+title: Editor
+
+permissions:
+  johannschopplich.deploy-trigger:
+    deploy: false
+```
+
+Users of that role don't see the button, and the server refuses their deploy request.
+
+A `"*": false` wildcard in a role blueprint turns `deploy` off as well, along with access to the views the button sits in. To let such a role deploy, grant them back next to the wildcard. A category you name starts from Kirby's defaults, so give each its own `"*": false` – `pages.access` and `pages.read` only matter for a button in a page view:
+
+```yml
+# site/blueprints/users/client.yml
+title: Client
+
+permissions:
+  "*": false
+  access:
+    "*": false
+    panel: true
+    site: true
+  site:
+    "*": false
+    access: true
+  pages:
+    "*": false
+    access: true
+    read: true
+  johannschopplich.deploy-trigger:
+    deploy: true
+```
+
+### 🧩 Kirby 4 Backport
+
+Kirby 4 has no view buttons, so the plugin backports the button to the site view only. It sits after the view's buttons and doesn't follow the `buttons` blueprint option. The `deploy` permission doesn't hide it there, but the server still refuses the request.
 
 ## Requirements
 
 - Kirby 4 or Kirby 5
 
-Kirby is not free software. However, you can try Kirby and the Starterkit on your local machine or on a test server as long as you need to make sure it is the right tool for your next project. … and when you're convinced, [buy your license](https://getkirby.com/buy).
-
 ## Installation
 
-### Composer
+### Composer (Recommended)
 
 ```bash
 composer require johannschopplich/kirby-deploy-trigger
 ```
 
-### Download
+### Manual Installation
 
 Download and copy this repository to `/site/plugins/kirby-deploy-trigger`.
 
-## Getting Started
+## Options
 
-### Webhook Setup
+All options are namespaced under `johannschopplich.deploy-trigger`:
 
-Create a webhook in your CI/CD service to listen for incoming requests. The webhook URL is the URL you need to specify in the `johannschopplich.deploy-trigger.deployUrl` option in the `config.php` file:
+| Option           | Default | Description                                                                                                                                                                                                                      |
+| ---------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `deployUrl`      | `null`  | URL of the deploy hook. Without it, the button fails with a missing option error.                                                                                                                                                |
+| `requestOptions` | `[]`    | Options for Kirby's [`Remote`](https://getkirby.com/docs/reference/objects/http/remote) class, such as `headers`, `data`, `agent`, `basicAuth`, `method` or `timeout` (10 seconds by default), merged over `'method' => 'POST'`. |
+
+Example `config.php`:
 
 ```php
-# /site/config/config.php
 return [
     'johannschopplich.deploy-trigger' => [
-        'deployUrl' => 'https://api.example.com/deploy',
+        'deployUrl' => 'https://api.netlify.com/build_hooks/<hook-id>',
+        'requestOptions' => [
+            'timeout' => 30
+        ]
     ]
 ];
 ```
 
-> [!TIP]
-> The `deployUrl` is sent as a POST request by default. You can change the request method with the [`requestOptions`](#configuration) option.
+## Recipes
 
-### Blueprint Setup
+### Vercel
 
-Kirby 5 introduces new extensions that allow you to add custom view buttons to most Panel views (e.g. page, site, or file). The Deploy Trigger plugin provides a button that can be added alongside the default buttons, such as the preview button or the language dropdown.
+Create a deploy hook under **Settings → Git → Deploy Hooks** of your project, as described in [Vercel's deploy hooks guide](https://vercel.com/docs/deploy-hooks), and use its URL as the `deployUrl`.
 
-To add the `deploy-trigger` button to a particular view, set the `buttons` option in the corresponding blueprint. The following example shows how to reference the default buttons and add the `deploy-trigger` button to the `site` blueprint:
+### Netlify
 
-```yaml
-# /site/blueprints/site.yml
-buttons:
-  - deploy-trigger # Re-order the button as needed
-  - preview
+Create a build hook as described in [Netlify's build hooks guide](https://docs.netlify.com/build/configure-builds/build-hooks/), and use its URL as the `deployUrl`.
+
+### GitHub Actions
+
+A GitHub Actions workflow starts on a [`repository_dispatch`](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#repository_dispatch) event:
+
+```yml
+# .github/workflows/deploy.yml
+on:
+  repository_dispatch:
+    types: [deploy]
 ```
 
-This way, you can reference the default buttons and decide where to place the `deploy-trigger` button.
+GitHub's API needs a token, a user agent, and a JSON body, so send them through `requestOptions`. A fine-grained personal access token needs write access to the repository's **Contents**:
 
-> [!TIP]
-> Kirby 4 does not support custom view buttons, but the `deploy-trigger` button has been backported 🎉. It is always prepended to the default buttons and cannot be moved.
-
-## Configuration
-
-Each configuration option is available in the `config.php` file.
-
-The following table lists all available options:
-
-| Option           | Default | Description                                                  |
-| ---------------- | ------- | ------------------------------------------------------------ |
-| `deployUrl`      | `null`  | The URL to trigger the deployment.                           |
-| `requestOptions` | `[]`    | Additional headers or a specific method to send the request. |
-
-## Cookbook
-
-### Trigger a Vercel Deployment
-
-To create a Deploy Hook for your project, make sure your project is [connected to a Git repository](https://vercel.com/docs/projects/overview#git).
-
-Once your project is connected, navigate to its **Settings** page and then select the **Git** menu item.
-
-In the "Deploy Hooks" section, choose a name for your Deploy Hook and select the branch that will be deployed when the generated URL is requested.
-
-[![Create Vercel deploy hooks](./.github/vercel-deploy-hooks-light.png)](https://vercel.com/docs/deployments/deploy-hooks)
-
-After submitting the form, you will see a URL that you can copy and use as the `deployUrl` option in the `config.php` file.
+```php
+return [
+    'johannschopplich.deploy-trigger' => [
+        'deployUrl' => 'https://api.github.com/repos/<owner>/<repo>/dispatches',
+        'requestOptions' => [
+            'agent' => 'kirby-deploy-trigger',
+            'headers' => [
+                'Accept' => 'application/vnd.github+json',
+                'Authorization' => 'Bearer <token>',
+                'Content-Type' => 'application/json'
+            ],
+            'data' => json_encode(['event_type' => 'deploy'])
+        ]
+    ]
+];
+```
 
 ## License
 
