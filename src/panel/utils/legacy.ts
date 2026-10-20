@@ -1,7 +1,5 @@
-/* eslint-disable ts/ban-ts-comment */
 import type { ComponentPublicInstance, PluginFunction } from "vue";
 import { isKirby5 } from "kirbyuse";
-// @ts-ignore - Vue component
 import DeployTriggerButton from "../components/ViewButtons/DeployTriggerButton.vue";
 
 export const legacyViewButtonMixin: PluginFunction<any> = (Vue) => {
