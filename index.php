@@ -3,7 +3,7 @@
 use Kirby\Cms\App;
 
 App::plugin('johannschopplich/deploy-trigger', [
-    // Role blueprints set this to `false` to refuse the deploy request and, on Kirby 5, hide the button.
+    // Role blueprints set this to `false` to refuse the deploy request and hide the button.
     'permissions' => [
         'deploy' => true
     ],

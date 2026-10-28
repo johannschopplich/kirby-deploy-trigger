@@ -23,7 +23,7 @@ Kirby Deploy Trigger is a plugin for [Kirby CMS](https://getkirby.com) that adds
 
 ## Requirements
 
-- Kirby 4 or Kirby 5
+- Kirby 6
 
 ## Installation
 
