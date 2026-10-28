@@ -4,6 +4,6 @@ buttons:
   - preview
   - deploy-trigger
 
-sections:
+fields:
   pages:
-    type: pages
+    type: pagelist
