@@ -95,13 +95,9 @@ permissions:
     deploy: true
 ```
 
-### 🧩 Kirby 4 Backport
-
-Kirby 4 has no view buttons, so the plugin backports the button to the site view only. It sits after the view's buttons and doesn't follow the `buttons` blueprint option. The `deploy` permission doesn't hide it there, but the server still refuses the request.
-
 ## Requirements
 
-- Kirby 4 or Kirby 5
+- Kirby 6
 
 ## Installation
 

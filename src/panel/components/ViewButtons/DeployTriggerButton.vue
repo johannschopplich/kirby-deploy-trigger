@@ -1,5 +1,9 @@
 <script setup lang="ts">
-import { ref, usePanel } from "kirbyuse";
+import { usePanel } from "kirbyuse";
+import { ref } from "vue";
+
+// The view button props Kirby passes (`disabled`, `responsive`, …) would override the button's own.
+defineOptions({ inheritAttrs: false });
 
 const panel = usePanel();
 const isDeploying = ref(false);
