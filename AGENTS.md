@@ -13,6 +13,10 @@ pnpm run format        # Prettier for src/panel, checked in CI
 pnpm run build         # build the Panel bundle (index.js)
 ```
 
+## Conventions
+
+- The plugin ships without `vendor/`, so it takes no runtime Composer dependency.
+
 ## Search Hints
 
 - `__deploy-trigger__/hook` – API route that sends the request to the deploy hook
