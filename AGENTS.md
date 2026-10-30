@@ -16,6 +16,7 @@ pnpm run build         # build the Panel bundle (index.js)
 ## Conventions
 
 - The plugin ships without `vendor/`, so it takes no runtime Composer dependency.
+- `src/panel/site.ts` feeds kirby.tools' Panel mocks.
 
 ## Search Hints
 
