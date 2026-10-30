@@ -17,7 +17,7 @@ Kirby Deploy Trigger is a plugin for [Kirby CMS](https://getkirby.com) that adds
 | --------------------------------------------------------------- | ----------------------------------------- |
 | Rebuild a static or headless frontend after editing content     | `deploy-trigger` view button              |
 | Place the button in the site view or a page view                | `buttons` in the blueprint                |
-| Show the button in every site or page view                      | `panel.viewButtons` option                |
+| Show the button in every page view                              | `panel.viewButtons` option                |
 | Keep a role from deploying                                      | `deploy` permission in the role blueprint |
 | Send a token, a JSON body, or another HTTP method with the hook | `requestOptions` option                   |
 
