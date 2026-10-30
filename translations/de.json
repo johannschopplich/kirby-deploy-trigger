@@ -1,0 +1,6 @@
+{
+  "johannschopplich.deploy-trigger.label": "Seite deployen",
+  "johannschopplich.deploy-trigger.success": "Deployment erfolgreich gestartet",
+  "johannschopplich.deploy-trigger.error.status": "Der Deploy-Hook hat mit Status {status} geantwortet",
+  "johannschopplich.deploy-trigger.error.unreachable": "Der Deploy-Hook ist nicht erreichbar"
+}
