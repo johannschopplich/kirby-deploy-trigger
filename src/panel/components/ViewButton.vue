@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { usePanel } from "kirbyuse";
 import { ref } from "vue";
-import DeployTriggerButtonBody from "../Ui/DeployTriggerButtonBody.vue";
+import ViewButtonBody from "./Ui/ViewButtonBody.vue";
 
 // The view button props Kirby passes (`disabled`, `responsive`, …) would override the button's own.
 defineOptions({ inheritAttrs: false });
@@ -36,7 +36,7 @@ async function triggerDeploy() {
 </script>
 
 <template>
-  <DeployTriggerButtonBody
+  <ViewButtonBody
     :label="panel.t('johannschopplich.deploy-trigger.label')"
     :is-deploying="isDeploying"
     @click="triggerDeploy()"

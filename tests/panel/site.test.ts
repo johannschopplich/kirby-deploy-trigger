@@ -13,9 +13,9 @@ describe("site barrel", () => {
   it("loads without `window`", async () => {
     expect(globalThis.window).toBeUndefined();
 
-    const { DeployTriggerButtonBody } = await import("../../src/panel/site");
+    const { ViewButtonBody } = await import("../../src/panel/site");
 
-    expect(DeployTriggerButtonBody).toBeTypeOf("object");
+    expect(ViewButtonBody).toBeTypeOf("object");
   });
 
   it("imports only the packages in PACKAGE_IMPORTS", async () => {
