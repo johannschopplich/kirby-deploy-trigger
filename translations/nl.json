@@ -1,0 +1,6 @@
+{
+  "johannschopplich.deploy-trigger.label": "Site implementeren",
+  "johannschopplich.deploy-trigger.success": "Implementatie succesvol gestart",
+  "johannschopplich.deploy-trigger.error.status": "De deploy-hook antwoordde met status {status}",
+  "johannschopplich.deploy-trigger.error.unreachable": "De deploy-hook is niet bereikbaar"
+}
