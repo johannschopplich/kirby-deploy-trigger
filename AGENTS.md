@@ -5,20 +5,16 @@ Kirby CMS Panel plugin that adds a view button to start a deployment through a d
 ## Commands
 
 ```bash
-composer test          # PHPUnit
-composer csfix         # php-cs-fixer, lives in tools/phpcs/vendor/bin/, not vendor/bin/
-pnpm run test:types    # typecheck with vue-tsc
-pnpm run lint          # ESLint
-pnpm run format        # Prettier for src/panel, checked in CI
-pnpm run build         # build the Panel bundle (index.js)
+composer test
+composer csfix         # lives in tools/phpcs/vendor/bin/, not vendor/bin/
+pnpm run test --run
+pnpm run test:types
+pnpm run lint
+pnpm run format        # src/panel/ and tests/panel/, checked in CI
+pnpm run build         # after a change in src/panel/; index.js is committed
 ```
 
 ## Conventions
 
 - The plugin ships without `vendor/`, so it takes no runtime Composer dependency.
 - `src/panel/site.ts` feeds kirby.tools' Panel mocks.
-
-## Search Hints
-
-- `__deploy-trigger__/hook` – API route that sends the request to the deploy hook
-- `johannschopplich.deploy-trigger` – permission category, option and translation prefix
