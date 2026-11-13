@@ -54,11 +54,7 @@ return [
                     throw new LogicException($message);
                 }
 
-                return [
-                    'status' => 'ok',
-                    'code' => 200,
-                    'data' => $response->content()
-                ];
+                return true;
             }
         ]
     ]

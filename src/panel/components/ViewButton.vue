@@ -15,11 +15,7 @@ async function triggerDeploy() {
 
   try {
     await Promise.all([
-      (async () => {
-        const { data } = await panel.api.post("__deploy-trigger__/hook");
-        // eslint-disable-next-line no-console
-        console.log("Deploy trigger response:", data);
-      })(),
+      panel.api.post("__deploy-trigger__/hook"),
       new Promise((resolve) => setTimeout(resolve, 1500)),
     ]);
 
