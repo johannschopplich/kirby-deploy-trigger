@@ -28,7 +28,7 @@ async function triggerDeploy() {
     );
   } catch (error) {
     console.error(error);
-    panel.notification.error((error as Error).message);
+    panel.notification.error(error);
   } finally {
     isDeploying.value = false;
   }
