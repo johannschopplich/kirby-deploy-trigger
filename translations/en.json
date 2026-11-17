@@ -1,0 +1,6 @@
+{
+  "johannschopplich.deploy-trigger.label": "Deploy Site",
+  "johannschopplich.deploy-trigger.success": "Successfully triggered deployment",
+  "johannschopplich.deploy-trigger.error.status": "The deploy hook responded with status {status}",
+  "johannschopplich.deploy-trigger.error.unreachable": "The deploy hook could not be reached"
+}
